@@ -38,6 +38,8 @@ src/qt/test/moc*.cpp
 *.patch
 .bitcoin
 *.a
+!libleveldb.a
+!libmemenv.a
 *.pb.cc
 *.pb.h
 
