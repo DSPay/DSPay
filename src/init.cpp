@@ -387,19 +387,6 @@ void ThreadImport(std::vector<boost::filesystem::path> vImportFiles)
     }
 }
 
-static void LogPrintTest() {
-	std::vector<std::string> vecpara = list_of("ranger.shi")("spark.huang")("qq.li")("franklin.liao")("bess.luo")(
-			"bruss.zhu");
-	BOOST_FOREACH(std::string& tag, vecpara) {
-		LogPrint(tag.c_str(), "this %s's print test\r\n", tag);
-	}
-}
-
-static void TestLogPrint()
-{
-	LogPrintTest();
-}
-
 
 /** Initialize bitcoin.
  *  @pre Parameters should be parsed and config file should be read.
@@ -619,9 +606,6 @@ bool AppInit2(boost::thread_group& threadGroup)
 
     if (GetBoolArg("-shrinkdebugfile", !fDebug))
         ShrinkDebugFile();
-
-
-    TestLogPrint();
 
     LogPrintf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
     LogPrintf("Bitcoin version %s (%s)\n", FormatFullVersion(), CLIENT_DATE);
