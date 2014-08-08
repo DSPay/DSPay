@@ -113,19 +113,37 @@ bool LogAcceptCategory(const char* category);
 /* Send a string to the log output */
 int LogPrintStr(const std::string &str);
 
+int LogPrintStr(const char* category, const std::string &str);
+
 #define strprintf tfm::format
 #define LogPrintf(...) LogPrint(NULL, __VA_ARGS__)
 
 /* When we switch to C++11, this can be switched to variadic templates instead
  * of this macro-based construction (see tinyformat.h).
  */
+//#define MAKE_ERROR_AND_LOG_FUNC(n)                                        \
+//    /*   Print to debug.log if -debug=category switch is given OR category is NULL. */ \
+//    template<TINYFORMAT_ARGTYPES(n)>                                          \
+//    static inline int LogPrint(const char* category, const char* format, TINYFORMAT_VARARGS(n))  \
+//    {                                                                         \
+//        if(!LogAcceptCategory(category)) return 0;                            \
+//        return LogPrintStr(tfm::format(format, TINYFORMAT_PASSARGS(n))); \
+//    }                                                                         \
+//    /*   Log error and return false */                                        \
+//    template<TINYFORMAT_ARGTYPES(n)>                                          \
+//    static inline bool error(const char* format, TINYFORMAT_VARARGS(n))                     \
+//    {                                                                         \
+//        LogPrintStr("ERROR: " + tfm::format(format, TINYFORMAT_PASSARGS(n)) + "\n"); \
+//        return false;                                                         \
+//    }
+
 #define MAKE_ERROR_AND_LOG_FUNC(n)                                        \
     /*   Print to debug.log if -debug=category switch is given OR category is NULL. */ \
     template<TINYFORMAT_ARGTYPES(n)>                                          \
     static inline int LogPrint(const char* category, const char* format, TINYFORMAT_VARARGS(n))  \
     {                                                                         \
-        if(!LogAcceptCategory(category)) return 0;                            \
-        return LogPrintStr(tfm::format(format, TINYFORMAT_PASSARGS(n))); \
+    	if (!fDebug) return 0;										   		\
+        return LogPrintStr(category, tfm::format(format, TINYFORMAT_PASSARGS(n))); \
     }                                                                         \
     /*   Log error and return false */                                        \
     template<TINYFORMAT_ARGTYPES(n)>                                          \
@@ -140,10 +158,15 @@ TINYFORMAT_FOREACH_ARGNUM(MAKE_ERROR_AND_LOG_FUNC)
 /* Zero-arg versions of logging and error, these are not covered by
  * TINYFORMAT_FOREACH_ARGNUM
  */
+//static inline int LogPrint(const char* category, const char* format)
+//{
+//    if(!LogAcceptCategory(category)) return 0;
+//    return LogPrintStr(format);
+//}
 static inline int LogPrint(const char* category, const char* format)
 {
-    if(!LogAcceptCategory(category)) return 0;
-    return LogPrintStr(format);
+	if (!fDebug) return 0;
+    return LogPrintStr(category, format);
 }
 static inline bool error(const char* format)
 {

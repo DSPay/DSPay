@@ -21,7 +21,8 @@ if BUILD_BITCOIN_CLI
 endif
 
 SUBDIRS = . $(BUILD_QT) $(BUILD_TEST)
-DIST_SUBDIRS = . qt test
+#DIST_SUBDIRS = . qt test
+DIST_SUBDIRS = . test
 .PHONY: FORCE
 # bitcoin core #
 BITCOIN_CORE_H = \

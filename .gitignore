@@ -85,3 +85,10 @@ qa/pull-tester/run-bitcoind-for-test.sh
 qa/pull-tester/build-tests.sh
 
 !src/leveldb*/Makefile
+/src/bitcoin-config.h
+/src/bitcoin-config.h.in
+/src/build-aux/config.guess
+/src/build-aux/config.sub
+/src/build-aux/depcomp
+/src/build-aux/install-sh
+/src/build-aux/missing

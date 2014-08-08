@@ -66,13 +66,7 @@ public:
     const std::vector<unsigned char> &Base58Prefix(Base58Type type) const { return base58Prefixes[type]; }
     virtual const vector<CAddress>& FixedSeeds() const = 0;
     int RPCPort() const { return nRPCPort; }
-    static int IntialParams(int argc, char* argv[]);
-private :
-    static void ParseParameters(int argc, const char* const argv[]);
 protected:
-
-    static map<string, string> m_mapArgs;
-    static map<string, vector<string> > m_mapMultiArgs;
     CChainParams() {}
 
     uint256 hashGenesisBlock;
